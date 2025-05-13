@@ -1,18 +1,16 @@
 class Solution{
     int answer = 0;
-    public int solution(int[][] trangle){
-        for(int i = 1; i < trangle.length ; i++){
-            for(int j = 0; j < trangle[i].length; j++){
-                if(j == 0 || j == trangle[i].length - 1) {
-                    if(j == 0) trangle[i][j] += trangle[i-1][j];
-                    else trangle[i][j] += trangle[i-1][j-1];
-                }
-                else trangle[i][j] += Math.max(trangle[i - 1][j - 1], trangle[i - 1][j]);
-            }
+    public int solution(int[][] triangle){
+        for(int i = 1; i < triangle.length ; i++){
+            triangle[i][0] += triangle[i-1][0];
+            triangle[i][i] += triangle[i-1][i-1];
+            for(int j = 1; j < triangle[i].length-1; j++)
+                triangle[i][j] += Math.max(triangle[i - 1][j - 1], triangle[i - 1][j]);
         }
-        for(int i = 0; i < trangle[trangle.length-1].length; i++){
-            if(trangle[trangle.length-1][i] > answer) answer = trangle[trangle.length-1][i];
+        for(int i = 0; i < triangle[triangle.length-1].length; i++){
+            if(triangle[triangle.length-1][i] > answer) answer = triangle[triangle.length-1][i];
         }
+
         return answer;
     }
 
