@@ -6,25 +6,27 @@ import java.util.StringTokenizer;
 public class Main {
 
     static long count = 0;
+    static int[] a;
+    static int[] aux;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int[] num = new int[N];
+        a = new int[N];
+        aux = new int[N];
         for(int i = 0; i < N; i++){
-            num[i] = Integer.parseInt(st.nextToken());
+            a[i] = Integer.parseInt(st.nextToken());
         }
-        sort(num);
+        sort(0, N-1);
 
         System.out.println(count);
     }
 
-    public static void merge(int[] a, int[] aux, int lo, int mid, int hi){
+    public static void merge(int lo, int mid, int hi){
         for(int i = lo; i <= hi; i++){
             aux[i] = a[i];
         }
-
         int j = lo, k = mid + 1;
         for(int i = lo; i <= hi ; i++){
             if(j > mid) a[i] = aux[k++];
@@ -37,16 +39,12 @@ public class Main {
         }
     }
 
-    public static void sort(int[] a){
-        int[] aux = new int[a.length];
-        sort(a,aux,0,a.length-1);
-    }
 
-    public static void sort(int[] a,int[] aux, int lo, int hi){
+    public static void sort(int lo, int hi){
         if(lo >= hi) return;
         int mid = lo + (hi - lo) / 2;
-        sort(a,aux,lo,mid);
-        sort(a,aux,mid + 1,hi);
-        merge(a,aux,lo,mid,hi);
+        sort(lo,mid);
+        sort(mid + 1,hi);
+        merge(lo,mid,hi);
     }
 }
